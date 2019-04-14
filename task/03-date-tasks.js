@@ -22,7 +22,8 @@
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
 function parseDataFromRfc2822(value) {
-   throw new Error('Not implemented');
+   let data =  new Date(value);
+   return data;
 }
 
 /**
@@ -37,7 +38,8 @@ function parseDataFromRfc2822(value) {
  *    '2016-01-19T08:07:37Z' => Date()
  */
 function parseDataFromIso8601(value) {
-   throw new Error('Not implemented');
+  let data =  new Date(value);
+  return data;
 }
 
 
@@ -56,7 +58,15 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
-   throw new Error('Not implemented');
+    if (date.getFullYear()%4 != 0 ){
+      return false;
+    }else if(date.getFullYear()%100 != 0){
+      return true;
+    }else if(date.getFullYear()%400 != 0){
+      return false;
+    }else{
+      return true;
+    }
 }
 
 
@@ -76,7 +86,31 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
-   throw new Error('Not implemented');
+
+  var hour =  endDate.getHours() - startDate.getHours();
+  var minutes = endDate.getMinutes() - startDate.getMinutes();
+  var seconds = endDate.getSeconds() - startDate.getSeconds();
+  var ms =  endDate.getMilliseconds() - startDate.getMilliseconds();
+
+
+  if (hour < 10){
+     hour = '0' + hour;
+  } 
+  if (minutes < 10){
+    minutes = '0' + minutes;
+  } 
+  if (seconds < 10){
+    seconds = '0' + seconds;
+  }
+  if (ms < 10){
+    ms = '00' + ms;
+  }else if(ms < 10){
+    ms = '0' + ms;
+  }
+
+
+
+  return hour+':'+minutes+':'+seconds+'.'+ms;
 }
 
 
@@ -94,7 +128,12 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-    throw new Error('Not implemented');
+  let res = Math.abs((date.getUTCHours() * 60 + date.getUTCMinutes() - date.getUTCMinutes() * 12) / 2) % 360;
+  if(res <= 180){
+    return res/180* Math.PI;
+  }else{
+    return (360-res)/180*Math.PI;
+  }
 }
 
 
